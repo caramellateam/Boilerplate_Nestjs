@@ -1,11 +1,12 @@
 {
   "name": "backend-boilerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "install": "node husky install",
     "prebuild": "rimraf dist",
     "build": "nest build && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -30,7 +31,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "patch": "clear;printf \"\n\n\n\";npm version patch --no-git-tag-version;",
     "minor": "clear;printf \"\n\n\n\";npm version minor --no-git-tag-version;",
-    "major": "clear;printf \"\n\n\n\";npm version major --no-git-tag-version;"
+    "major": "clear;printf \"\n\n\n\";npm version major --no-git-tag-version;",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nestjs/common": "^8.2.0",
@@ -102,12 +104,6 @@
       "^@root/(.*)$": "./$1",
       "^@config/(.*)$": "config/$1",
       "^$type/(.*)$": "<rootDir>/@types/$1"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn test",
-      "pre-push": "yarn test"
     }
   }
 }
