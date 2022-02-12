@@ -8,6 +8,18 @@
 
 
 
+### 특이사항
+
+- HUSKY  설치됨
+  - 설정값
+    - `yarn test && yarn patch && git add package.json`
+
+
+
+### 설치 방법
+
+- `yarn && yarn prepare`
+
 
 
 ### 명령어 리스트
