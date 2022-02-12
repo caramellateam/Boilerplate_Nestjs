@@ -7,26 +7,43 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "typeormshell:dev": "NODE_ENV=development node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "typeormshell:prod": "NODE_ENV=production node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "migration:cdev": "NODE_ENV=development yarn typeorm migration:create",
+    "migration:cprod": "NODE_ENV=production yarn typeorm migration:create",
+    "migration:rundev": "NODE_ENV=development yarn typeorm migration:run",
+    "migration:runprod": "NODE_ENV=production yarn typeorm migration:run",
+    "migration:revertdev": "NODE_ENV=development yarn typeorm migration:revert",
+    "migration:revertprod": "NODE_ENV=production yarn typeorm migration:revert",
+    "start": "APP_VERSION=$(./bin/get_version_script.sh) nest start",
+    "dev": "APP_VERSION=$(./bin/get_version_script.sh) nest start --watch",
+    "debug": "APP_VERSION=$(./bin/get_version_script.sh) nest start --debug --watch",
+    "preprod": "APP_VERSION=$(./bin/get_version_script.sh) yarn build",
+    "prod": "APP_VERSION=$(./bin/get_version_script.sh) node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "patch": "clear;printf \"\n\n\n\";npm version patch --no-git-tag-version;",
+    "minor": "clear;printf \"\n\n\n\";npm version minor --no-git-tag-version;",
+    "major": "clear;printf \"\n\n\n\";npm version major --no-git-tag-version;"
   },
   "dependencies": {
-    "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
+    "@nestjs/common": "^8.2.0",
+    "@nestjs/core": "^8.2.0",
+    "@nestjs/jwt": "^8.0.0",
+    "@nestjs/mapped-types": "*",
+    "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -39,8 +56,12 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "jest": "^27.2.5",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
@@ -57,6 +78,10 @@
       "json",
       "ts"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
@@ -66,6 +91,23 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@src/(.*)$": "<rootDir>/$1",
+      "^@auth/(.*)$": "<rootDir>/auth/$1",
+      "^@interceptor/(.*)$": "<rootDir>/interceptors/$1",
+      "^@decorator/(.*)$": "<rootDir>/decorators/$1",
+      "^@filter/(.*)$": "<rootDir>/filters/$1",
+      "^@util/(.*)$": "<rootDir>utils/$1",
+      "^@root/(.*)$": "./$1",
+      "^@config/(.*)$": "config/$1",
+      "^$type/(.*)$": "<rootDir>/@types/$1"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test",
+      "pre-push": "yarn test"
+    }
   }
 }
