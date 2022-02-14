@@ -20,3 +20,5 @@ describe('AppController', () => {
     });
   });
 });
+
+// NOTE 만약 mock 할수 없을경우, spyon 사용
