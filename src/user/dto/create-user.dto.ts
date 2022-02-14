@@ -22,13 +22,6 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty({
-    description: '유저 유저 아이디',
-    default: 'tester',
-  })
-  @IsString()
-  username: string;
-
-  @ApiProperty({
     description: '유저 비밀번호',
     default: 'testpass',
   })

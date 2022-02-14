@@ -43,10 +43,16 @@
   - lint formating
 - typeormshell:dev
   - `NODE_ENV=development`typeorm 데이터베이스 연결 쉘 반환
+- typeormshell:prod
+  - `NODE_ENV=production`typeorm 데이터베이스 연결 쉘 반환
+- migration:gdev
+  - `NODE_ENV=development` typeorm 마이그레이션 생성 ( 코드 까지 생성 )
+- migration:gprod
+  - `NODE_ENV=development` typeorm 마이그레이션 생성 ( 코드 까지 생성 )
 - migration:cdev
-  - `NODE_ENV=development` typeorm 마이그레이션 생성
+  - `NODE_ENV=development` typeorm 마이그레이션 생성 ( empty code )
 - migration:cprod
-  - `NODE_ENV=development` typeorm 마이그레이션 생성
+  - `NODE_ENV=development` typeorm 마이그레이션 생성 ( empty code )
 - migration:rundev
   - `NODE_ENV=development` typeorm 마이그레이션 실행
 - migration:runprod

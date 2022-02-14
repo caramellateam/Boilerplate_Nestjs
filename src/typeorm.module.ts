@@ -1,54 +1,39 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import COMMON_UTIL from '@util/common.util';
-
-const dbModule = !COMMON_UTIL.isProduction
-  ? TypeOrmModule.forRoot({
-    type: 'mariadb',
-    username: 'fill-production-username',
-    // NOTE USERNAME
-    password: 'fill-production-password',
-    // NOTE mysql password production
-    host: 'fill-production-host',
-    // NOTE Mysql Host
-    database: 'fill-production-database',
-    // NOTE MYSQL DATABASE
-    entities: ['dist/**/*.entity.js'],
-    port: 3307,
-    synchronize: false,
-    autoLoadEntities: true,
-    retryDelay: 3000,
-    retryAttempts: 10,
-  })
-  : TypeOrmModule.forRoot({
-    type: 'oracle',
-    username: 'fill-development-username',
-    // NOTE USERNAME DEVELOPMENT
-    password: 'fill-password',
-    // NOTE mysql password DEVELOPMENT
-    host: 'fill-development-host',
-    // NOTE Mysql Host DEVELOPMENT
-    database: 'fill-development-database',
-    // NOTE MYSQL DATABASE DEVELOPMENT
-    entities: ['dist/**/*.entity.js'],
-    port: 3307,
-    // synchronize: true,
-    synchronize: false,
-    autoLoadEntities: true,
-    retryDelay: 3000,
-    retryAttempts: 10,
-  });
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    dbModule,
-  ],
-  exports: [
-    dbModule,
+    ConfigModule.forRoot({
+      envFilePath: ((process.env.NODE_ENV || 'development') === 'production')
+        ? ['.production.env', '.env']
+        : '.development.env',
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get('TYPEORM_TYPE') as 'oracle' | 'mysql' | 'mariadb' | 'mssql' | 'postgres' | 'sqlite',
+        username: configService.get('TYPEORM_USERNAME') as string,
+        password: configService.get('TYPEORM_PASSWORD') as string,
+        connectString: configService.get('TYPEORM_CONNECTSTRING') as string,
+        // NOTE oracle 활성화용
+
+        // host: configService.get('TYPEORM_HOST') as string,
+        // port: configService.get('TYPEORM_PORT') as number,
+        // database: configService.get('TYPEORM_DATABASE') as string,
+        // NOTE mysql 활성화용
+        entities: ['dist/**/*.entity.js'],
+        synchronize: false,
+        authLoadEntities: true,
+        retryDelay: 3000,
+        retryAttempts: 1,
+      }),
+    }),
   ],
 })
 class DBModule {
-
 }
 
 export default DBModule;
