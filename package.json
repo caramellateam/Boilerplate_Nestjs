@@ -1,12 +1,12 @@
 {
   "name": "backend-boilerplate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "install": "node husky install",
+    "install": "husky install",
     "prebuild": "rimraf dist",
     "build": "nest build && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -31,8 +31,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "patch": "clear;printf \"\n\n\n\";npm version patch --no-git-tag-version;",
     "minor": "clear;printf \"\n\n\n\";npm version minor --no-git-tag-version;",
-    "major": "clear;printf \"\n\n\n\";npm version major --no-git-tag-version;",
-    "prepare": "husky install"
+    "major": "clear;printf \"\n\n\n\";npm version major --no-git-tag-version;"
   },
   "dependencies": {
     "@nestjs/common": "^8.2.0",
@@ -42,15 +41,23 @@
     "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "cookie-parser": "^1.4.6",
+    "express-basic-auth": "^1.2.1",
+    "nest-winston": "^1.6.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "winston": "^3.6.0",
+    "winston-cloudwatch": "^3.1.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
+    "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
     "@types/jest": "27.4.0",
     "@types/node": "^16.0.0",
