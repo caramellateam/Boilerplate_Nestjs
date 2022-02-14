@@ -13,6 +13,9 @@
 - HUSKY  설치됨
   - 설정값
     - `yarn test && yarn patch && git add package.json`
+- TYPEORM
+  - `app.module.ts`
+    `typeorm_dev.module.ts 를 typeorm.module.ts 로 변경`
 
 
 

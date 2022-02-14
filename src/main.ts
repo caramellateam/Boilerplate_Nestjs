@@ -94,7 +94,6 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('CARAMELLA BACKEND API')
-    .setBasePath('/')
     // NOTE swagger title
     .setDescription('CARAMELLA Backend BoilerPlate')
     .setVersion(process.env.APP_VERSION || '0.0.0')
