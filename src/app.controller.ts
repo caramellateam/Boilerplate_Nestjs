@@ -1,6 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller, Get,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { GResponse } from './interceptors/transformer.interface';
 
 @Controller()
 export class AppController {
@@ -10,7 +13,19 @@ export class AppController {
 
   @ApiTags('Root')
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getVersion(): GResponse<string> {
+    const version = this.appService.getVersion();
+    return {
+      data: version,
+    };
+  }
+
+  @ApiTags('Root')
+  @Get()
+  getIp(): GResponse<string> {
+    const ip = this.appService.getIp();
+    return {
+      data: ip,
+    };
   }
 }

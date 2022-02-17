@@ -12,7 +12,7 @@ export default class User {
   id!: number;
 
   @Column({
-    type: 'char',
+    type: 'varchar2',
     length: 255,
     unique: true,
     nullable: false,
@@ -23,7 +23,7 @@ export default class User {
   email!: string;
 
   @Column({
-    type: 'char',
+    type: 'varchar2',
     length: 100,
     unique: false,
     nullable: false,

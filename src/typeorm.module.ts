@@ -29,6 +29,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         authLoadEntities: true,
         retryDelay: 3000,
         retryAttempts: 1,
+        logging: ['query', 'error'],
       }),
     }),
   ],

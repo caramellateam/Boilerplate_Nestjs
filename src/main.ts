@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import COMMON_UTIL from '@util/common.util';
 import basicAuth from 'express-basic-auth';
@@ -57,6 +57,10 @@ async function bootstrap() {
     }),
   });
   // NOTE CORS & Winston 로깅 활성화 부분
+
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

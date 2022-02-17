@@ -1,14 +1,11 @@
-import TbMeMemA from '@src/users/entities/TbMeMemA.entity';
+import Users from '@src/users/entities/user.entity';
 
 declare global {
   namespace Express {
     // tslint:disable-next-line:no-empty-interface
     export interface AuthInfo { }
     // tslint:disable-next-line:no-empty-interface
-    export interface User {
-      // memNo: TbMeMemA['tmmaMemno'],
-      // gmemNo: TbMeMemA['tmmxGmemno'],
-      // isAdmin: boolean,
+    export interface User extends Users{
       // NOTE override JWT USER INFO
       iat?: number,
       exp?: number,
@@ -45,10 +42,7 @@ declare namespace Express {
   // tslint:disable-next-line:no-empty-interface
   export interface AuthInfo { }
   // tslint:disable-next-line:no-empty-interface
-  export interface User {
-    // memNo: TbMeMemA['tmmaMemno'],
-    // gmemNo: TbMeMemA['tmmxGmemno'],
-    // isAdmin: boolean,
+  export interface User extends Users {
     // NOTE override JWT USER INFO
     iat?: number,
     exp?: number,

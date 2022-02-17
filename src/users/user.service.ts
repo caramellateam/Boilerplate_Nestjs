@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 import ENCRYPT_UTIL from '@src/utils/encrypt.util';
 
@@ -8,6 +8,7 @@ import User from './entities/user.entity';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FindUserDto, FindUserOptions } from './interfaces/find.interface';
 
 @Injectable()
 export class UserService {
@@ -45,8 +46,32 @@ export class UserService {
     return 0;
   }
 
-  findOne(id: number) {
-    return id;
+  async findOne(filter: FindUserDto | number, options?: FindUserOptions)
+  : Promise<User | undefined> {
+    const secretSelectOptions: FindOneOptions<User> = {
+      select: options?.secret
+        ? ['id', 'name', 'email', 'hash', 'salt', 'createdAt', 'updatedAt']
+        : ['id', 'name', 'email', 'createdAt', 'updatedAt'],
+    };
+    if (typeof filter === 'number') {
+      const user = await this.userRepository.findOne(+filter, secretSelectOptions);
+      return user;
+    }
+
+    const { id, email } = filter;
+
+    if (filter.email && filter.id) {
+      const user = await this.userRepository.findOne({ id, email }, secretSelectOptions);
+      if (user) return user;
+    } else if (filter.email) {
+      const user = await this.userRepository.findOne({ email }, secretSelectOptions);
+      console.log (email);
+      if (user) return user;
+    } else if (filter.id) {
+      const user = await this.userRepository.findOne(id, secretSelectOptions);
+      if (user) return user;
+    }
+    return undefined;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
