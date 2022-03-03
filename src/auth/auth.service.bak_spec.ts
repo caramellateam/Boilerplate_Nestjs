@@ -3,12 +3,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '@src/users/user.service';
 import UserMockRepository from '@src/users/entities/user.mock';
 
-import { AuthService } from './auth.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import User from '@src/users/entities/user.entity';
 import { CreateUserDto } from '@src/users/dto/create-user.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 
 jest.mock("@nestjs/jwt", () => ({
   sign: jest.fn(() => 'test'),

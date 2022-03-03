@@ -6,7 +6,7 @@ import User from '@src/users/entities/user.entity';
 import { UserService } from '@src/users/user.service';
 import ENCRYPT_UTIL from '@src/utils/encrypt.util';
 import { DeepPartial } from 'typeorm';
-// import { ITokenPayload } from './interfaces/payload.interface';
+// import type { ITokenPayload } from './interfaces/payload.interface';
 
 @Injectable()
 export class AuthService {

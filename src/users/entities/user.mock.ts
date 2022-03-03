@@ -1,5 +1,5 @@
 import { DeepPartial } from 'typeorm';
-import { FindUserDto } from '../interfaces/find.interface';
+import type { FindUserDto } from '../interfaces/find.interface';
 
 import User from './user.entity';
 

@@ -8,7 +8,7 @@ import User from './entities/user.entity';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindUserDto, FindUserOptions } from './interfaces/find.interface';
+import type { FindUserDto, FindUserOptions } from './interfaces/find.interface';
 
 @Injectable()
 export class UserService {

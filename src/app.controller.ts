@@ -3,7 +3,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import { GResponse } from './interceptors/transformer.interface';
+import type { GResponse } from './interceptors/transformer.interface';
 
 @Controller()
 export class AppController {

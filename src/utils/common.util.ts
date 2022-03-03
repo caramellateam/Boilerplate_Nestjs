@@ -1,4 +1,4 @@
-import { ICommonResponseStruct } from './common.interface';
+import type { ICommonResponseStruct } from './common.interface';
 
 const isProduction = (process.env.NODE_ENV || 'development') === 'production' || false;
 
