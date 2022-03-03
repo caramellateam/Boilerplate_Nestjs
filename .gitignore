@@ -39,3 +39,5 @@ lerna-debug.log*
 
 # typeorm test class
 src/typeorm_dev.module.ts
+
+secrets/*

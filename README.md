@@ -22,6 +22,7 @@
 ### 설치 방법
 
 - `yarn && yarn prepare`
+- ORACLE WALLET 파일은, secrets 라는 폴더를 생성하여, 해당 폴더에 넣기
 
 
 
